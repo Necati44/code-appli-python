@@ -6,7 +6,7 @@ on:
         - release
 
 jobs:
-    build:
+    lint:
         runs-on: ubuntu-latest
 
         steps:
@@ -18,6 +18,19 @@ jobs:
           with:
             python-version: '3.9'
             cache: 'pip'
+        
+        - name: Run flake8 lint
+          run: |
+            pip install flake8
+            flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+            flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
 
         - name: Install Python dependencies
           run: pip install -r requirements.txt
@@ -29,7 +42,14 @@ jobs:
           uses: actions/upload-artifact@v4
           with:
             name: code-appli-python_bundle
-            path: . # or path/to/artifact
+            path: .
+        
+    publish:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
 
         - name: Create Release
           id: create_release
@@ -51,9 +71,3 @@ jobs:
               asset_path: ./code-appli-python_bundle.zip
               asset_name: code-appli-python_bundle.zip
               asset_content_type: application/zip
-
-        - name: Run flake8 lint
-          run: |
-            pip install flake8
-            flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-            flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
