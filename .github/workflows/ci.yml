@@ -37,7 +37,7 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-              upload_url: ${{ steps.upload_bundle.outputs.upload_url }}
+              upload_url: ${{ steps.upload_bundle.outputs.artifact-url }}
               asset_path: ./code-appli-python_bundle.zip
               asset_name: code-appli-python_bundle.zip
               asset_content_type: application/zip
