@@ -35,7 +35,7 @@ jobs:
         - name: Upload Release Asset
           uses: actions/upload-release-asset@v1
           env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
           with:
               upload_url: ${{ steps.upload_bundle.outputs.artifact-url }}
               asset_path: ./code-appli-python_bundle.zip
