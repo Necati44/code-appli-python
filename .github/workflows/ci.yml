@@ -26,18 +26,28 @@ jobs:
           run: zip -r code-appli-python_bundle app.py static templates
         
         - name: Upload code-appli-python_bundle.zip
-          id: upload_bundle
           uses: actions/upload-artifact@v4
           with:
             name: code-appli-python_bundle
             path: . # or path/to/artifact
 
+        - name: Create Release
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: ${{ github.ref }}
+            release_name: Release ${{ github.ref }}
+            draft: false
+            prerelease: false
+
         - name: Upload Release Asset
           uses: actions/upload-release-asset@v1
           env:
-            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-              upload_url: ${{ steps.upload_bundle.outputs.artifact-url }}
+              upload_url: ${{ steps.create_release.outputs.upload_url }}
               asset_path: ./code-appli-python_bundle.zip
               asset_name: code-appli-python_bundle.zip
               asset_content_type: application/zip
