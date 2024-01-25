@@ -23,10 +23,21 @@ jobs:
           run: pip install -r requirements.txt
 
         - name: Create Bundle Zip
-          run: zip -r code-appli-python_bundle.zip app.py static templates
+          run: zip -r code-appli-python_bundle app.py static templates
         
         - name: Upload code-appli-python_bundle.zip
+          id: upload_bundle
           uses: actions/upload-artifact@v4
           with:
-            name: code-appli-python_bundle.zip
+            name: code-appli-python_bundle
             path: . # or path/to/artifact
+
+        - name: Upload Release Asset
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+              upload_url: ${{ steps.upload_bundle.outputs.upload_url }}
+              asset_path: ./code-appli-python_bundle.zip
+              asset_name: code-appli-python_bundle.zip
+              asset_content_type: application/zip
