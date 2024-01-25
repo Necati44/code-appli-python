@@ -1,0 +1,14 @@
+name: CI pour Appli Python
+
+on:
+    push:
+      branches:
+        - release
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
