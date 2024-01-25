@@ -24,3 +24,9 @@ jobs:
 
         - name: Create Bundle Zip
           run: zip -r code-appli-python_bundle.zip app.py static templates
+        
+        - name: Upload code-appli-python_bundle.zip
+          uses: actions/upload-artifact@v4
+          with:
+            name: code-appli-python_bundle.zip
+            path: . # or path/to/artifact
