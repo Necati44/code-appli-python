@@ -59,7 +59,7 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: code-appli-python_bundle
-            path: .
+            path: ./build
 
         - name: Create Release
           id: create_release
