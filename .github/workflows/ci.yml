@@ -59,7 +59,10 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: code-appli-python_bundle
-            path: .
+            path: ./build
+
+        - name: Zip the code for assets
+          run: zip -r code-appli-python_bundle.zip ./build
 
         - name: Create Release
           id: create_release
