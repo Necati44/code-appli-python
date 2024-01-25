@@ -55,6 +55,12 @@ jobs:
         - name: Checkout Repository
           uses: actions/checkout@v4
 
+        - name: Download code-appli-python_bundle.zip
+          uses: actions/download-artifact@v4
+          with:
+            name: code-appli-python_bundle
+            path: .
+
         - name: Create Release
           id: create_release
           uses: actions/create-release@v1
